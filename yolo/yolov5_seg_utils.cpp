@@ -76,7 +76,7 @@ void LetterBox(const cv::Mat &image, cv::Mat &outImage, cv::Vec4d &params, const
 	cv::copyMakeBorder(outImage, outImage, top, bottom, left, right, cv::BORDER_CONSTANT, color);
 }
 
-void GetMask(const cv::Mat &maskProposals, const cv::Mat &maskProtos, std::vector<OutputSeg> &output, const MaskParams &maskParams)
+void GetMask(const cv::Mat &maskProposals, const cv::Mat &maskProtos, std::vector<SegData> &output, const MaskParams &maskParams)
 {
 	// cout << maskProtos.size << endl;
 
@@ -113,7 +113,7 @@ void GetMask(const cv::Mat &maskProposals, const cv::Mat &maskProtos, std::vecto
 	}
 }
 
-void GetMask2(const Mat &maskProposals, const Mat &mask_protos, OutputSeg &output, const MaskParams &maskParams)
+void GetMask2(const Mat &maskProposals, const Mat &mask_protos, SegData &output, const MaskParams &maskParams)
 {
 	int seg_channels = maskParams.segChannels;
 	int net_width = maskParams.netWidth;
@@ -175,7 +175,7 @@ void GetMask2(const Mat &maskProposals, const Mat &mask_protos, OutputSeg &outpu
 	output.boxMask = mask;
 }
 
-void DrawPred(Mat &img, vector<OutputSeg> result, std::vector<std::string> classNames, vector<Scalar> color)
+void DrawPred(Mat &img, vector<SegData> result, std::vector<std::string> classNames, vector<Scalar> color)
 {
 	Mat mask = img.clone();
 	for (int i = 0; i < result.size(); i++)

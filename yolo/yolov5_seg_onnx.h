@@ -5,6 +5,7 @@
 #include <opencv2/opencv.hpp>
 #include "yolov5_seg_utils.h"
 #include <onnxruntime_cxx_api.h>
+#include "../bytetrack/dataType.h"
 
 // #include <tensorrt_provider_factory.h>  //if use OrtTensorRTProviderOptionsV2
 // #include <onnxruntime_c_api.h>
@@ -28,12 +29,12 @@ public:
 	 * \param[in] srcImg:a 3-channels image.
 	 * \param[out] output:detection results of input image.
 	 */
-	bool OnnxDetect(cv::Mat &srcImg, std::vector<OutputSeg> &output);
+	bool OnnxDetect(cv::Mat &srcImg, std::vector<SegData> &output);
 	/** \brief  detect,batch size= _batchSize
 	 * \param[in] srcImg:A batch of images.
 	 * \param[out] output:detection results of input images.
 	 */
-	bool OnnxBatchDetect(std::vector<cv::Mat> &srcImg, std::vector<std::vector<OutputSeg>> &output);
+	bool OnnxBatchDetect(std::vector<cv::Mat> &srcImg, std::vector<std::vector<SegData>> &output);
 
 private:
 	template <typename T>

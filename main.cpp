@@ -10,7 +10,7 @@ using namespace std;
 using namespace cv;
 using namespace dnn;
 
-void run_track(cv::Mat &frame, std::vector<Detection> &results, ByteTrack &tracker)
+void run_track(cv::Mat &frame, std::vector<SegData> &results, ByteTrack &tracker)
 {
     std::vector<STrack> output_stracks = tracker.update(results);
 
@@ -106,20 +106,11 @@ int main()
         cv::Mat frame = cv::imread(vstrImageLeft[i]);
         cv::Mat frame_show = frame.clone();
 
-        vector<OutputSeg> result;
+        vector<SegData> result;
         yolo.OnnxDetect(frame, result);
+    
 
-        vector<Detection> detections;
-        for (auto &&seg : result)
-        {
-            Detection detect;
-            detect.box = seg.box;
-            detect.classId = seg.id;
-            detect.conf = seg.confidence;
-            detections.push_back(detect);
-        }
-
-        run_track(frame_show, detections, tracker);  // run tracker and draw tracking and box
+        run_track(frame_show, result, tracker);  // run tracker and draw tracking and box
 
         DrawPred(frame_show, result, yolo._className, color);  // draw mask
 

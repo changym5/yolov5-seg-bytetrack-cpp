@@ -1,6 +1,6 @@
 #include "STrack.h"
 
-STrack::STrack(std::vector<float> tlwh_, float score, int cls)
+STrack::STrack(std::vector<float> tlwh_, float score, int cls, const cv::Mat &mask)
 {
 	_tlwh.resize(4);
 	_tlwh.assign(tlwh_.begin(), tlwh_.end());
@@ -19,6 +19,7 @@ STrack::STrack(std::vector<float> tlwh_, float score, int cls)
 	this->score = score;
 	start_frame = 0;
 	cls_id = cls;
+	this->mask = mask;
 }
 
 STrack::~STrack()
@@ -106,6 +107,8 @@ void STrack::update(STrack &new_track, int frame_id)
 	this->is_activated = true;
 
 	this->score = new_track.score;
+	this->mask = new_track.mask;
+	this->detectbox = new_track.detectbox;
 }
 
 void STrack::static_tlwh()

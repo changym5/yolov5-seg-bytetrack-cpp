@@ -14,7 +14,7 @@ enum TrackState
 class STrack
 {
 public:
-	STrack(std::vector<float> tlwh_, float score, int cls);
+	STrack(std::vector<float> tlwh_, float score, int cls, const cv::Mat &mask);
 	~STrack();
 
 	std::vector<float> static tlbr_to_tlwh(std::vector<float> &tlbr);
@@ -48,6 +48,9 @@ public:
 	KAL_MEAN mean;
 	KAL_COVA covariance;
 	float score;
+
+	cv::Mat mask;
+	cv::Rect detectbox;
 
 private:
 	byte_kalman::ByteKalmanFilter kalman_filter;

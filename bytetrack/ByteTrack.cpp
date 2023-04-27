@@ -16,7 +16,7 @@ ByteTrack::~ByteTrack()
 {
 }
 
-std::vector<STrack> ByteTrack::update(const std::vector<Detection> &objects)
+std::vector<STrack> ByteTrack::update(const std::vector<SegData> &objects)
 {
 
     ////////////////// Step 1: Get detections //////////////////
@@ -49,10 +49,11 @@ std::vector<STrack> ByteTrack::update(const std::vector<Detection> &objects)
             tlbr_[2] = objects[i].box.x + objects[i].box.width;
             tlbr_[3] = objects[i].box.y + objects[i].box.height;
 
-            float score = objects[i].conf;
-            int cls = objects[i].classId;
+            float score = objects[i].confidence;
+            int cls = objects[i].id;
 
-            STrack strack(STrack::tlbr_to_tlwh(tlbr_), score, cls);
+            STrack strack(STrack::tlbr_to_tlwh(tlbr_), score, cls, objects[i].boxMask);
+            strack.detectbox = objects[i].box;
             if (score >= track_thresh)
             {
                 detections.push_back(strack);

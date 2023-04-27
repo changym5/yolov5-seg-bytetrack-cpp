@@ -25,9 +25,14 @@ typedef Eigen::Matrix<float, 4, 4, Eigen::RowMajor> KAL_HCOVA;
 typedef std::pair<KAL_MEAN, KAL_COVA> KAL_DATA;
 using KAL_HDATA = std::pair<KAL_HMEAN, KAL_HCOVA>;
 
-struct Detection
+struct SegData
 {
-    cv::Rect box;
-    float conf{};
-    int classId{};
+	SegData() : id(-1), confidence(0.f) {}
+	SegData(int _id, float _confidence, const cv::Rect &_box, const cv::Mat &_boxMask)
+		: id(_id), confidence(_confidence), box(_box), boxMask(_boxMask) {}
+	
+	int id;
+	float confidence;
+	cv::Rect box;
+	cv::Mat boxMask;
 };

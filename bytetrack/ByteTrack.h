@@ -1,6 +1,7 @@
 #pragma once
 
 #include "STrack.h"
+#include "dataType.h"
 
 class ByteTrack
 {
@@ -8,7 +9,7 @@ public:
 	ByteTrack(int frame_rate = 30, int track_buffer = 30);
 	~ByteTrack();
 
-	std::vector<STrack> update(const std::vector<Detection> &objects);
+	std::vector<STrack> update(const std::vector<SegData> &objects);
 	cv::Scalar get_color(int idx);
 
 private:
